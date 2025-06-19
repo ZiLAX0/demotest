@@ -1,0 +1,25 @@
+CREATE DATABASE myclean;
+
+USE myclean;
+
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  fullname VARCHAR(255) NOT NULL,
+  phone VARCHAR(50) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  login VARCHAR(50) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE requests (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  address VARCHAR(255) NOT NULL,
+  contact VARCHAR(255) NOT NULL,
+  service ENUM('Общий клининг','Генеральная уборка','Послестроительная уборка','Химчистка ковров и мебели') NOT NULL,
+  date_time DATETIME NOT NULL,
+  payment ENUM('Наличные','Банковская карта') NOT NULL,
+  status ENUM('Новая заявка','Услуга оказана','Услуга отменена') DEFAULT 'Новая заявка',
+  reject_reason VARCHAR(255),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
